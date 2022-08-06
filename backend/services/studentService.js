@@ -10,6 +10,11 @@ const findOne = async (email) => {
   return result;
 };
 
+const findByRA = async (RA) => {
+  const result = await Student.findOne({ where: { RA } });
+  return result;
+};
+
 const findAll = async () => {
   const result = await Student.findAll();
   return result;
@@ -33,6 +38,7 @@ const remove = async (id) => {
 module.exports = {
   create,
   findOne,
+  findByRA,
   findAll,
   findById,
   update,
