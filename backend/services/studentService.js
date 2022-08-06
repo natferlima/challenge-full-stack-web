@@ -20,6 +20,12 @@ const findById = async (id) => {
   return result;
 };
 
+const update = async(id, name, email) => {
+  await Student.update({name, email}, { where: {id} });
+  const result = await Student.findByPk(id);
+  return result;
+}
+
 const remove = async (id) => {
   await Student.destroy({ where: { id } });
 };
@@ -29,5 +35,6 @@ module.exports = {
   findOne,
   findAll,
   findById,
+  update,
   remove,
 };
