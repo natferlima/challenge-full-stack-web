@@ -13,3 +13,5 @@ const PORT = 3001;
 app.listen(3001, () => {
     console.log("API running on PORT:", PORT);
 });
+
+module.exports = app;

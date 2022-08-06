@@ -38,13 +38,13 @@ module.exports = async (req, res, next) => {
   const findEmail = await studentService.findOne(email);
   if(findEmail) {
     return res.status(400).json(
-      { messagem: 'O email já existe' }
+      { message: 'O email já existe' }
     );
   }
   const findRA = await studentService.findByRA(RA);
   if(findRA) {
     return res.status(400).json(
-      { messagem: 'Aluno(a) já cadastrado(a)' }
+      { message: 'Aluno(a) já cadastrado(a)' }
     );
   }
 
