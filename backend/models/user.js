@@ -8,5 +8,5 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'Users',
   });
-  return Category;
+  return User;
 };
