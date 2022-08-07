@@ -2,7 +2,7 @@ const studentService = require('../services/studentService');
 
 module.exports = async (req, res, next) => {
 
-  const { name, email, RA, CPF } = req.body;
+  const { name, email } = req.body;
   
   if (!name || name === "") {
     return res.status(400).json(
@@ -12,16 +12,6 @@ module.exports = async (req, res, next) => {
   if (!email || email === "") {
     return res.status(400).json(
       { message: 'O campo email é obrigatório.' },
-    );
-  }
-  if (!RA || RA === "") {
-    return res.status(400).json(
-      { message: 'O campo Registro Acadêmico (RA) é obrigatório.' },
-    );
-  }
-  if (!CPF || CPF === "") {
-    return res.status(400).json(
-      { message: 'O campo CPF é obrigatório.' },
     );
   }
   if (name.length < 3) {
@@ -39,22 +29,6 @@ module.exports = async (req, res, next) => {
   if(findEmail) {
     return res.status(400).json(
       { message: 'O email já existe.' }
-    );
-  }
-  const findRA = await studentService.findByRA(RA);
-  if(findRA) {
-    return res.status(400).json(
-      { message: 'Aluno(a) já cadastrado(a).' }
-    );
-  }
-  if (CPF.length !== 14) {
-    return res.status(400).json(
-      { message: 'O campo CPF não é valido.' },
-    );
-  }
-  if (RA.length !== 6) {
-    return res.status(400).json(
-      { message: 'O campo Registro Acadêmico não é valido.' },
     );
   }
 
