@@ -1,7 +1,8 @@
 const { Student } = require('../models');
 
 const create = async ({name, email, RA, CPF}) => {
-  const result = await Student.create({ name, email, RA, CPF });
+  const data = await Student.create({ name, email, RA, CPF });
+  const result = { message: "Aluno(a) cadastrado(a) com sucesso!" };
   return result;
 };
 

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <span>Componente de Mensagem</span>
+    <Message :msg="msg" v-show="msg" />
     <div>
-      <form id="student-form">
+      <form id="student-form" @submit="createStudent">
         <div class="input-container">
           <label for="name">Nome</label>
           <input type="text" id="name" name="name" v-model="name" placeholder="Informe o nome completo">
@@ -20,8 +20,10 @@
           <input type="text" id="CPF" name="CPF" v-model="CPF" placeholder="Informe o número do documento">
         </div>
         <div class="button-container">
-          <button type="button" id="btn-cancel">Cancelar</button>
-          <button type="button" id="btn-save">Salvar</button>
+          <router-link to="/">
+            <button type="button" id="btn-cancel">Cancelar</button>
+          </router-link>
+          <button type="submit" id="btn-save">Salvar</button>
         </div>
       </form>
     </div>
@@ -29,8 +31,45 @@
 </template>
 
 <script>
+  import axios from 'axios';
+  import Message from './Message.vue';
+
   export default {
-    name: "StudentForm"
+    name: "StudentForm",
+    data() {
+      return {
+        name: null,
+        email: null,
+        RA: null,
+        CPF: null,
+        msg: null,
+      }
+    },
+    methods: {
+      async createStudent(e) {
+        e.preventDefault();
+        const { data } = await axios({
+          method: "post",
+          url: "http://localhost:3001/student",
+          data: {
+            name: this.name,
+            email: this.email,
+            RA: this.RA,
+            CPF: this.CPF,
+          },
+        });
+        this.name = "";
+        this.email = "";
+        this.RA = "";
+        this.CPF = "";
+        this.msg = data.message;
+        setTimeout(() => this.msg = "", 3000);
+        console.log(data);
+      }
+    },
+    components: {
+      Message
+    }
   }
 </script>
 

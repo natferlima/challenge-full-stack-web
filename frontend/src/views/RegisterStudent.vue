@@ -1,6 +1,8 @@
 <template>
   <div class="main-container">
-    <h1>Cadastro de Aluno</h1>
+    <div class="title-register-student">
+      <h1>Cadastro de Aluno</h1>
+    </div>
     <StudentForm />
   </div>
 </template>
@@ -14,4 +16,12 @@
     }
   }
 </script>
+
+<style>
+  .title-register-student {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+</style>
 
