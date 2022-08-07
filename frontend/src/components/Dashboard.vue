@@ -9,10 +9,10 @@
       </div>
     </div>
     <div id="student-table-rows">
-      <div class="student-table-row">
-        <div class="order-number">123456</div>
-        <div>Natália Ferreira Lima Lima Lima Lima</div>
-        <div>111.111.111-11</div>
+      <div class="student-table-row" v-for=" student in students" :key="student.id">
+        <div class="order-number">{{ student.RA }}</div>
+        <div>{{ student.name }}</div>
+        <div>{{ student.CPF }}</div>
         <div>
           <button type="button" class="btn-edit">Editar</button>
           <button type="button" class="btn-remove">Excluir</button>
@@ -23,8 +23,25 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
-    name: "Dashboard"
+    name: "Dashboard",
+    data() {
+      return {
+        students: null
+      }
+    },
+    methods: {
+      async getStudents() {
+        const { data } = await axios("http://localhost:3001/student");
+        this.students = data;
+        console.log(data);
+      }
+    },
+    mounted() {
+      this.getStudents();
+    }
   }
 </script>
   

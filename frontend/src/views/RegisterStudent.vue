@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="title-register-student">
-      <h1>Cadastro de Aluno</h1>
+      <h1>Cadastro de Aluno(a)</h1>
     </div>
     <StudentForm />
   </div>
