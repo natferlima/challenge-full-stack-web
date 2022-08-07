@@ -11,19 +11,28 @@
           <label for="email">E-mail</label>
           <input type="text" id="email" name="email" v-model="email" placeholder="Informe apenas um e-mail">
         </div>
-        <div class="input-container">
+        <div v-if="edit" class="input-container">
+          <label for="RA">RA</label>
+          <input disabled type="text" id="RA" name="RA" v-model="RA" placeholder="Informe o registro acadêmico">
+        </div>
+        <div v-else class="input-container">
           <label for="RA">RA</label>
           <input type="text" id="RA" name="RA" v-model="RA" placeholder="Informe o registro acadêmico">
         </div>
-        <div class="input-container">
+        <div v-if="edit" class="input-container">
+          <label for="CPF">CPF</label>
+          <input disabled type="text" id="CPF" name="CPF" v-model="CPF" placeholder="Informe o número do documento">
+        </div>
+        <div v-else class="input-container">
           <label for="CPF">CPF</label>
           <input type="text" id="CPF" name="CPF" v-model="CPF" placeholder="Informe o número do documento">
         </div>
         <div class="button-container">
           <router-link to="/">
-            <button type="button" id="btn-cancel">Cancelar</button>
+            <button type="button" id="btn-cancel" @click="cancel">Cancelar</button>
           </router-link>
-          <button type="submit" id="btn-save">Salvar</button>
+          <button v-if="edit" type="button" id="btn-save" @click="updateStudent">Salvar</button>
+          <button v-else type="submit" id="btn-save">Salvar</button>
         </div>
       </form>
     </div>
@@ -32,6 +41,7 @@
 
 <script>
   import axios from 'axios';
+  import router from '../router';
   import Message from './Message.vue';
 
   export default {
@@ -43,6 +53,7 @@
         RA: null,
         CPF: null,
         msg: null,
+        edit: false,
       }
     },
     methods: {
@@ -65,10 +76,48 @@
         this.msg = data.message;
         setTimeout(() => this.msg = "", 3000);
         console.log(data);
+      },
+      async showStudentInfo() {
+        const idStudent = JSON.parse(localStorage.getItem('edit'));
+        if (idStudent !== null || idStudent !== "") {
+          const { data } = await axios(`http://localhost:3001/student/${idStudent}`);
+          this.name = data.name;
+          this.email = data.email;
+          this.RA = data.RA;
+          this.CPF = data.CPF;
+          this.edit = true;
+          console.log(data);
+        }
+      },
+      async updateStudent() {
+        const idStudent = JSON.parse(localStorage.getItem('edit'));
+        if (idStudent !== null || idStudent !== "") {
+          await axios({
+            method: "put",
+            url: `http://localhost:3001/student/${idStudent}`,
+            data: {
+              name: this.name,
+              email: this.email,
+            },
+          });
+          localStorage.removeItem('edit');
+          this.edit = false;
+          router.push({ path: '/' });
+        }
+      },
+      async cancel() {
+        const idStudent = JSON.parse(localStorage.getItem('edit'));
+        if (idStudent !== null || idStudent !== "") {
+          localStorage.removeItem('edit');
+          this.edit = false;
+        }
       }
     },
     components: {
       Message
+    },
+    mounted() {
+      this.showStudentInfo();
     }
   }
 </script>

@@ -14,7 +14,7 @@
         <div>{{ student.name }}</div>
         <div>{{ student.CPF }}</div>
         <div>
-          <button type="button" class="btn-edit">Editar</button>
+          <button type="button" class="btn-edit" @click="updateStudent(student.id)">Editar</button>
           <button type="button" class="btn-remove" @click="deleteStudent(student.id)">Excluir</button>
         </div>
       </div>
@@ -24,6 +24,7 @@
 
 <script>
   import axios from 'axios';
+  import router from '../router';
 
   export default {
     name: "Dashboard",
@@ -44,6 +45,10 @@
           url: `http://localhost:3001/student/${id}`
         });
         this.getStudents();
+      },
+      async updateStudent(id) {
+        localStorage.setItem('edit', JSON.stringify(id));
+        router.push({ path: '/register-student' });
       }
     },
     mounted() {
