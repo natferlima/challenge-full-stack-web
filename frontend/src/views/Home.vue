@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-container">
     <router-link to="/register-student">
       <button type="button">Cadastrar Aluno</button>
     </router-link>
