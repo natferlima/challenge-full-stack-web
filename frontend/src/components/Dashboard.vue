@@ -15,7 +15,7 @@
         <div>{{ student.CPF }}</div>
         <div>
           <button type="button" class="btn-edit">Editar</button>
-          <button type="button" class="btn-remove">Excluir</button>
+          <button type="button" class="btn-remove" @click="deleteStudent(student.id)">Excluir</button>
         </div>
       </div>
     </div>
@@ -37,6 +37,13 @@
         const { data } = await axios("http://localhost:3001/student");
         this.students = data;
         console.log(data);
+      },
+      async deleteStudent(id) {
+        await axios({
+          method: "delete",
+          url: `http://localhost:3001/student/${id}`
+        });
+        this.getStudents();
       }
     },
     mounted() {
