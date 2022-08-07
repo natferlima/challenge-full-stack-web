@@ -23,7 +23,7 @@
     methods: {
       async clear() {
         const idStudent = JSON.parse(localStorage.getItem('edit'));
-        if (idStudent !== null || idStudent !== "") {
+        if (idStudent !== null && idStudent !== "") {
           localStorage.removeItem('edit');
         }
       }

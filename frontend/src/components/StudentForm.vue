@@ -17,7 +17,7 @@
         </div>
         <div v-else class="input-container">
           <label for="RA">RA</label>
-          <input type="text" id="RA" name="RA" v-model="RA" placeholder="Informe o registro acadêmico">
+          <input v-mask="'000000'" type="text" id="RA" name="RA" v-model="RA" placeholder="Informe o registro acadêmico">
         </div>
         <div v-if="edit" class="input-container">
           <label for="CPF">CPF</label>
@@ -25,7 +25,7 @@
         </div>
         <div v-else class="input-container">
           <label for="CPF">CPF</label>
-          <input type="text" id="CPF" name="CPF" v-model="CPF" placeholder="Informe o número do documento">
+          <input v-mask-cpf type="text" id="CPF" name="CPF" v-model="CPF" placeholder="Informe o número do documento">
         </div>
         <div class="button-container">
           <router-link to="/">
@@ -58,56 +58,62 @@
     },
     methods: {
       async createStudent(e) {
-        e.preventDefault();
-        const { data } = await axios({
-          method: "post",
-          url: "http://localhost:3001/student",
-          data: {
-            name: this.name,
-            email: this.email,
-            RA: this.RA,
-            CPF: this.CPF,
-          },
-        });
-        this.name = "";
-        this.email = "";
-        this.RA = "";
-        this.CPF = "";
-        this.msg = data.message;
-        setTimeout(() => this.msg = "", 3000);
-        console.log(data);
+        try {
+          e.preventDefault();
+          const { data } = await axios({
+            method: "post",
+            url: "http://localhost:3001/student",
+            data: {
+              name: this.name,
+              email: this.email,
+              RA: this.RA,
+              CPF: this.CPF,
+            },
+          });
+          this.name = "";
+          this.email = "";
+          this.RA = "";
+          this.CPF = "";
+          this.msg = data.message;
+          setTimeout(() => this.msg = "", 3000);
+        } catch(error) {
+          this.msg = error.response.data.message;
+        }
       },
       async showStudentInfo() {
         const idStudent = JSON.parse(localStorage.getItem('edit'));
-        if (idStudent !== null || idStudent !== "") {
+        if (idStudent !== null && idStudent !== "") {
           const { data } = await axios(`http://localhost:3001/student/${idStudent}`);
           this.name = data.name;
           this.email = data.email;
           this.RA = data.RA;
           this.CPF = data.CPF;
           this.edit = true;
-          console.log(data);
         }
       },
       async updateStudent() {
         const idStudent = JSON.parse(localStorage.getItem('edit'));
-        if (idStudent !== null || idStudent !== "") {
-          await axios({
-            method: "put",
-            url: `http://localhost:3001/student/${idStudent}`,
-            data: {
-              name: this.name,
-              email: this.email,
-            },
-          });
-          localStorage.removeItem('edit');
-          this.edit = false;
-          router.push({ path: '/' });
+        if (idStudent !== null && idStudent !== "") {
+          try {
+            await axios({
+              method: "put",
+              url: `http://localhost:3001/student/${idStudent}`,
+              data: {
+                name: this.name,
+                email: this.email,
+              },
+            });
+            localStorage.removeItem('edit');
+            this.edit = false;
+            router.push({ path: '/' });
+          } catch(error) {
+            this.msg = error.response.data.message;
+          }
         }
       },
       async cancel() {
         const idStudent = JSON.parse(localStorage.getItem('edit'));
-        if (idStudent !== null || idStudent !== "") {
+        if (idStudent !== null && idStudent !== "") {
           localStorage.removeItem('edit');
           this.edit = false;
         }

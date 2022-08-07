@@ -37,7 +37,6 @@
       async getStudents() {
         const { data } = await axios("http://localhost:3001/student");
         this.students = data;
-        console.log(data);
       },
       async deleteStudent(id) {
         await axios({

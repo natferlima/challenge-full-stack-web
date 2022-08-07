@@ -1,6 +1,8 @@
 <template>
   <nav id="nav">
-    <img :src="logo" :alt="alt" id="logo">
+    <router-link to="/">
+      <img :src="logo" :alt="alt" id="logo">
+    </router-link>
   </nav>
 </template>
 
