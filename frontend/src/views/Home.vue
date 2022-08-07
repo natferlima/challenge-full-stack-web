@@ -8,7 +8,24 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
-    name: "Home"
+    name: "Home",
+    data() {
+      return {
+        students: null
+      }
+    },
+    methods: {
+      async getStudents() {
+        const { data } = await axios("http://localhost:3001/student");
+        this.students = data;
+        console.log(data);
+      }
+    },
+    mounted() {
+      this.getStudents();
+    }
   }
 </script>
