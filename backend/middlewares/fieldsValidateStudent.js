@@ -52,7 +52,7 @@ module.exports = async (req, res, next) => {
       { message: 'O campo CPF não é valido.' },
     );
   }
-  if (RA.length !== 6) {
+  if (RA.toString().length !== 6) {
     return res.status(400).json(
       { message: 'O campo Registro Acadêmico não é valido.' },
     );
