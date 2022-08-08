@@ -4,6 +4,18 @@ module.exports = async (req, res, next) => {
 
   const { name, email } = req.body;
   
+  if (name === "") {
+    return res.status(400).json(
+      { message: 'O campo nome não pode ser vazio.' },
+    );
+  };
+
+  if (email === "") {
+    return res.status(400).json(
+      { message: 'O campo email não pode ser vazio.' },
+    );
+  };
+    
   if (name && name.length < 3) {
     return res.status(400).json(
       { message: 'O campo nome precisa ter mais de 3 caracteres.' },

@@ -34,6 +34,7 @@ const update = async(id, name, email) => {
 
 const remove = async (id) => {
   await Student.destroy({ where: { id } });
+  return { message: "Aluno(a) excluído(a) com sucesso!"};
 };
 
 module.exports = {
