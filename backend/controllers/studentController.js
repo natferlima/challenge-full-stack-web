@@ -22,7 +22,7 @@ const update = async (req, res) => {
   const { name, email } = req.body;
   const result = await studentService.update(id, name, email);
   return res.status(200).json(result);
-}
+};
 
 const remove = async (req, res) => {
   const { id } = req.params;
