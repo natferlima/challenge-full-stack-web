@@ -28,7 +28,7 @@
           <input v-mask-cpf type="text" id="CPF" name="CPF" v-model="CPF" placeholder="Informe o número do documento">
         </div>
         <div class="button-container">
-          <router-link to="/">
+          <router-link to="/home">
             <button type="button" id="btn-cancel" @click="cancel">Cancelar</button>
           </router-link>
           <button v-if="edit" type="button" id="btn-save" @click="updateStudent">Salvar</button>
@@ -60,6 +60,7 @@
       async createStudent(e) {
         try {
           e.preventDefault();
+          const token = JSON.parse(localStorage.getItem('token'));
           const { data } = await axios({
             method: "post",
             url: "http://localhost:3001/student",
@@ -68,6 +69,9 @@
               email: this.email,
               RA: this.RA,
               CPF: this.CPF,
+            },
+            headers: {
+              Authorization: token,
             },
           });
           this.name = "";
@@ -82,8 +86,13 @@
       },
       async showStudentInfo() {
         const idStudent = JSON.parse(localStorage.getItem('edit'));
+        const token = JSON.parse(localStorage.getItem('token'));
         if (idStudent !== null && idStudent !== "") {
-          const { data } = await axios(`http://localhost:3001/student/${idStudent}`);
+          const { data } = await axios(`http://localhost:3001/student/${idStudent}`, {
+          headers: {
+            Authorization: token,
+          },
+        });
           this.name = data.name;
           this.email = data.email;
           this.RA = data.RA;
@@ -93,6 +102,7 @@
       },
       async updateStudent() {
         const idStudent = JSON.parse(localStorage.getItem('edit'));
+        const token = JSON.parse(localStorage.getItem('token'));
         if (idStudent !== null && idStudent !== "") {
           try {
             await axios({
@@ -102,10 +112,13 @@
                 name: this.name,
                 email: this.email,
               },
+              headers: {
+                Authorization: token,
+              },
             });
             localStorage.removeItem('edit');
             this.edit = false;
-            router.push({ path: '/' });
+            router.push({ path: '/home' });
           } catch(error) {
             this.msg = error.response.data.message;
           }

@@ -36,4 +36,13 @@
     min-height: 500px;
     background-color:  #f0f0f0;
   }
+  #div-btn-logout {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+  }
+  #btn-logout {
+    border: 0px;
+    cursor: pointer;
+  }
 </style>

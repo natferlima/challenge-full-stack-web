@@ -1,5 +1,8 @@
 <template>
   <div class="main-container">
+    <div id="div-btn-logout">
+      <button type="button" id="btn-logout" @click="logout">SAIR</button>
+    </div>
     <div id="title-home">
       <h1>Consulta de Aluno(a)</h1>
     </div>
@@ -13,12 +16,13 @@
 </template>
 
 <script>
+  import router from '../router';
   import Dashboard from '../components/Dashboard.vue';
 
   export default {
     name: "Home",
     components: {
-      Dashboard
+      Dashboard,
     },
     methods: {
       async clear() {
@@ -26,6 +30,10 @@
         if (idStudent !== null && idStudent !== "") {
           localStorage.removeItem('edit');
         }
+      },
+      async logout() {
+        localStorage.clear();
+        router.push({ path: '/' });
       }
     },
     mounted() {

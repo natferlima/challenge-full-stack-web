@@ -35,13 +35,22 @@
     },
     methods: {
       async getStudents() {
-        const { data } = await axios("http://localhost:3001/student");
+        const token = JSON.parse(localStorage.getItem('token'));
+        const { data } = await axios("http://localhost:3001/student", {
+          headers: {
+            Authorization: token,
+          },
+        });
         this.students = data;
       },
       async deleteStudent(id) {
+        const token = JSON.parse(localStorage.getItem('token'));
         await axios({
           method: "delete",
-          url: `http://localhost:3001/student/${id}`
+          url: `http://localhost:3001/student/${id}`,
+          headers: {
+            Authorization: token,
+          },
         });
         this.getStudents();
       },
