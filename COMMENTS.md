@@ -1,7 +1,7 @@
 # Desafio Técnico GrupoA Educação
 
 **Stack Utilizada:**
-* MySQL - document database
+* MySQL - database
 * Express(.js) - Node.js web framework
 * Vue(.js) - a client-side JavaScript framework
 * Node(.js) - the premier JavaScript web server
@@ -11,7 +11,7 @@
 
 **1.** Login e logout;
 
-**2.** Listar numa tabela todos os alunos castrados;
+**2.** Listar numa tabela todos os alunos cadastrados;
 
 **3.** Cadastrar aluno;
 
