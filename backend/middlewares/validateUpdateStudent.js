@@ -2,6 +2,7 @@ const studentService = require('../services/studentService');
 
 module.exports = async (req, res, next) => {
 
+  const { id } = req.params;
   const { name, email } = req.body;
   
   if (name === "") {
@@ -29,7 +30,11 @@ module.exports = async (req, res, next) => {
   }
   if (email) {
     const findEmail = await studentService.findOne(email);
-    if(findEmail) {
+    let idDB = "";
+    if (findEmail) {
+      idBD = findEmail.dataValues.id.toString();
+    }
+    if(findEmail && idBD !== id) {
       return res.status(400).json(
         { message: 'O email já existe.' }
       );
