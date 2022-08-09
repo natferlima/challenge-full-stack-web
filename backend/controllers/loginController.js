@@ -1,9 +1,8 @@
 const userService = require('../services/userService');
-const generateToken = require('../utils/generateJWT');
+const generateJWT = require('../utils/generateJWT');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-
   try {
 
     if (!email || !password || email === "" || password === "") {
@@ -22,7 +21,9 @@ const login = async (req, res) => {
       role: newFindUser.role,
     };
 
-    const token = generateToken(userInfo);
+    const token = generateJWT.generateToken(userInfo);
+    console.log(token);
+    console.log({ token });
     return res.status(200).json({ token });
 
   } catch (e) {

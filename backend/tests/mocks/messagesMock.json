@@ -4,5 +4,8 @@
   },
   {
     "message": "Aluno(a) excluído(a) com sucesso!"
+  },
+  {
+    "message": "O campo email não é válido."
   }
 ]
