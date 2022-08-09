@@ -22,8 +22,6 @@ const login = async (req, res) => {
     };
 
     const token = generateJWT.generateToken(userInfo);
-    console.log(token);
-    console.log({ token });
     return res.status(200).json({ token });
 
   } catch (e) {
